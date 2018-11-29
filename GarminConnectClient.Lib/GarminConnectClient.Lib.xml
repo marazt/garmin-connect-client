@@ -1,0 +1,2107 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GarminConnectClient.Lib</name>
+    </assembly>
+    <members>
+        <member name="T:GarminConnectClient.Lib.Configuration">
+            <inheritdoc />
+            <summary>
+            Configuration
+            </summary>
+            <seealso cref="T:GarminConnectClient.Lib.IConfiguration" />
+        </member>
+        <member name="M:GarminConnectClient.Lib.Configuration.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Configuration" /> class.
+            </summary>
+            <param name="root">The root.</param>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Configuration.Username">
+            <inheritdoc />
+            <summary>
+            Gets the username.
+            </summary>
+            <value>
+            The username.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Configuration.Password">
+            <inheritdoc />
+            <summary>
+            Gets the password.
+            </summary>
+            <value>
+            The password.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Configuration.BackupDir">
+            <inheritdoc />
+            <summary>
+            Gets the backup dir.
+            </summary>
+            <value>
+            The backup dir.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Configuration.StorageConnectionString">
+            <inheritdoc />
+            <summary>
+            Gets the storage connection string.
+            </summary>
+            <value>
+            The storage connection string.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Configuration.ContainerName">
+            <inheritdoc />
+            <summary>
+            Gets the name of the container.
+            </summary>
+            <value>
+            The name of the container.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.AccessControlRule">
+            <summary>
+            Access control rule
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.AccessControlRule.TypeId">
+            <summary>
+            Gets or sets the type identifier.
+            </summary>
+            <value>
+            The type identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.AccessControlRule.TypeKey">
+            <summary>
+            Gets or sets the type key.
+            </summary>
+            <value>
+            The type key.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.Activity">
+            <summary>
+            Activity
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.ActivityId">
+            <summary>
+            Gets or sets the activity identifier.
+            </summary>
+            <value>
+            The activity identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.ActivityName">
+            <summary>
+            Gets or sets the name of the activity.
+            </summary>
+            <value>
+            The name of the activity.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.Description">
+            <summary>
+            Gets or sets the description.
+            </summary>
+            <value>
+            The description.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.UserProfileId">
+            <summary>
+            Gets or sets the user profile identifier.
+            </summary>
+            <value>
+            The user profile identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.IsMultiSportParent">
+            <summary>
+            Gets or sets a value indicating whether this instance is multi sport parent.
+            </summary>
+            <value>
+              <c>true</c> if this instance is multi sport parent; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.ActivityType">
+            <summary>
+            Gets or sets the type of the activity.
+            </summary>
+            <value>
+            The type of the activity.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.EventType">
+            <summary>
+            Gets or sets the type of the event.
+            </summary>
+            <value>
+            The type of the event.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.AccessControlRule">
+            <summary>
+            Gets or sets the access control rule.
+            </summary>
+            <value>
+            The access control rule.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.TimeZoneUnit">
+            <summary>
+            Gets or sets the time zone unit.
+            </summary>
+            <value>
+            The time zone unit.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.Metadata">
+            <summary>
+            Gets or sets the metadata.
+            </summary>
+            <value>
+            The metadata.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.Summary">
+            <summary>
+            Gets or sets the summary.
+            </summary>
+            <value>
+            The summary.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.LocationName">
+            <summary>
+            Gets or sets the name of the location.
+            </summary>
+            <value>
+            The name of the location.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.ActivityImage">
+            <summary>
+            Activity image
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityImage.ImageId">
+            <summary>
+            Gets or sets the image identifier.
+            </summary>
+            <value>
+            The image identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityImage.Url">
+            <summary>
+            Gets or sets the URL.
+            </summary>
+            <value>
+            The URL.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityImage.SmallUrl">
+            <summary>
+            Gets or sets the small URL.
+            </summary>
+            <value>
+            The small URL.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityImage.MediumUrl">
+            <summary>
+            Gets or sets the medium URL.
+            </summary>
+            <value>
+            The medium URL.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityImage.Latitude">
+            <summary>
+            Gets or sets the latitude.
+            </summary>
+            <value>
+            The latitude.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityImage.Longitude">
+            <summary>
+            Gets or sets the longitude.
+            </summary>
+            <value>
+            The longitude.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityImage.PhotoDate">
+            <summary>
+            Gets or sets the photo date.
+            </summary>
+            <value>
+            The photo date.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.ActivityType">
+            <summary>
+            Activity type
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityType.TypeId">
+            <summary>
+            Gets or sets the type identifier.
+            </summary>
+            <value>
+            The type identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityType.TypeKey">
+            <summary>
+            Gets or sets the type key.
+            </summary>
+            <value>
+            The type key.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityType.ParentTypeId">
+            <summary>
+            Gets or sets the parent type identifier.
+            </summary>
+            <value>
+            The parent type identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ActivityType.SortOrder">
+            <summary>
+            Gets or sets the sort order.
+            </summary>
+            <value>
+            The sort order.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.ChartAvailability">
+            <summary>
+            Chart availability
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowAirTemperature">
+            <summary>
+            Gets or sets a value indicating whether [show air temperature].
+            </summary>
+            <value>
+              <c>true</c> if [show air temperature]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowDistance">
+            <summary>
+            Gets or sets a value indicating whether [show distance].
+            </summary>
+            <value>
+              <c>true</c> if [show distance]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowDuration">
+            <summary>
+            Gets or sets a value indicating whether [show duration].
+            </summary>
+            <value>
+              <c>true</c> if [show duration]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowElevation">
+            <summary>
+            Gets or sets a value indicating whether [show elevation].
+            </summary>
+            <value>
+              <c>true</c> if [show elevation]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowHeartRate">
+            <summary>
+            Gets or sets a value indicating whether [show heart rate].
+            </summary>
+            <value>
+              <c>true</c> if [show heart rate]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowMovingDuration">
+            <summary>
+            Gets or sets a value indicating whether [show moving duration].
+            </summary>
+            <value>
+              <c>true</c> if [show moving duration]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowMovingSpeed">
+            <summary>
+            Gets or sets a value indicating whether [show moving speed].
+            </summary>
+            <value>
+              <c>true</c> if [show moving speed]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowRunCadence">
+            <summary>
+            Gets or sets a value indicating whether [show run cadence].
+            </summary>
+            <value>
+              <c>true</c> if [show run cadence]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowSpeed">
+            <summary>
+            Gets or sets a value indicating whether [show speed].
+            </summary>
+            <value>
+              <c>true</c> if [show speed]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.ChartAvailability.ShowTimestamp">
+            <summary>
+            Gets or sets a value indicating whether [show timestamp].
+            </summary>
+            <value>
+              <c>true</c> if [show timestamp]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.DeviceMetaData">
+            <summary>
+            Device metadata
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.DeviceMetaData.DeviceId">
+            <summary>
+            Gets or sets the device identifier.
+            </summary>
+            <value>
+            The device identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.DeviceMetaData.DeviceTypePk">
+            <summary>
+            Gets or sets the device type pk.
+            </summary>
+            <value>
+            The device type pk.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.DeviceMetaData.DeviceVersionPk">
+            <summary>
+            Gets or sets the device version pk.
+            </summary>
+            <value>
+            The device version pk.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.FileFormat">
+            <summary>
+            File format
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.FileFormat.FormatId">
+            <summary>
+            Gets or sets the format identifier.
+            </summary>
+            <value>
+            The format identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.FileFormat.FormatKey">
+            <summary>
+            Gets or sets the format key.
+            </summary>
+            <value>
+            The format key.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.Metadata">
+            <summary>
+            Metadata
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.IsOriginal">
+            <summary>
+            Gets or sets a value indicating whether this instance is original.
+            </summary>
+            <value>
+              <c>true</c> if this instance is original; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.DeviceApplicationInstallationId">
+            <summary>
+            Gets or sets the device application installation identifier.
+            </summary>
+            <value>
+            The device application installation identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.AgentApplicationInstallationId">
+            <summary>
+            Gets or sets the agent application installation identifier.
+            </summary>
+            <value>
+            The agent application installation identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.AgentString">
+            <summary>
+            Gets or sets the agent string.
+            </summary>
+            <value>
+            The agent string.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.FileFormat">
+            <summary>
+            Gets or sets the file format.
+            </summary>
+            <value>
+            The file format.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.AssociatedCourseId">
+            <summary>
+            Gets or sets the associated course identifier.
+            </summary>
+            <value>
+            The associated course identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.LastUpdateDate">
+            <summary>
+            Gets or sets the last update date.
+            </summary>
+            <value>
+            The last update date.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.UploadedDate">
+            <summary>
+            Gets or sets the uploaded date.
+            </summary>
+            <value>
+            The uploaded date.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.VideoUrl">
+            <summary>
+            Gets or sets the video URL.
+            </summary>
+            <value>
+            The video URL.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.HasPolyline">
+            <summary>
+            Gets or sets the has polyline.
+            </summary>
+            <value>
+            The has polyline.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.HasChartData">
+            <summary>
+            Gets or sets the has chart data.
+            </summary>
+            <value>
+            The has chart data.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.HasHrTimeInZones">
+            <summary>
+            Gets or sets the has hr time in zones.
+            </summary>
+            <value>
+            The has hr time in zones.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.HasPowerTimeInZones">
+            <summary>
+            Gets or sets the has power time in zones.
+            </summary>
+            <value>
+            The has power time in zones.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.UserInfoDto">
+            <summary>
+            Gets or sets the user information dto.
+            </summary>
+            <value>
+            The user information dto.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.ChartAvailability">
+            <summary>
+            Gets or sets the chart availability.
+            </summary>
+            <value>
+            The chart availability.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.ChildIds">
+            <summary>
+            Gets or sets the child ids.
+            </summary>
+            <value>
+            The child ids.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.Sensors">
+            <summary>
+            Gets or sets the sensors.
+            </summary>
+            <value>
+            The sensors.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.ActivityImages">
+            <summary>
+            Gets or sets the activity images.
+            </summary>
+            <value>
+            The activity images.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.Manufacturer">
+            <summary>
+            Gets or sets the manufacturer.
+            </summary>
+            <value>
+            The manufacturer.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.DiveNumber">
+            <summary>
+            Gets or sets the dive number.
+            </summary>
+            <value>
+            The dive number.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.LapCount">
+            <summary>
+            Gets or sets the lap count.
+            </summary>
+            <value>
+            The lap count.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.AssociatedWorkoutId">
+            <summary>
+            Gets or sets the associated workout identifier.
+            </summary>
+            <value>
+            The associated workout identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.IsAtpActivity">
+            <summary>
+            Gets or sets the is atp activity.
+            </summary>
+            <value>
+            The is atp activity.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.DeviceMetaData">
+            <summary>
+            Gets or sets the device meta data.
+            </summary>
+            <value>
+            The device meta data.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.Gcj02">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:GarminConnectClient.Lib.Dto.Metadata" /> is GCJ02.
+            </summary>
+            <value>
+              <c>true</c> if GCJ02; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.AutoCalcCalories">
+            <summary>
+            Gets or sets a value indicating whether [automatic calculate calories].
+            </summary>
+            <value>
+              <c>true</c> if [automatic calculate calories]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.Favorite">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:GarminConnectClient.Lib.Dto.Metadata" /> is favorite.
+            </summary>
+            <value>
+              <c>true</c> if favorite; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.ElevationCorrected">
+            <summary>
+            Gets or sets a value indicating whether [elevation corrected].
+            </summary>
+            <value>
+              <c>true</c> if [elevation corrected]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.PersonalRecord">
+            <summary>
+            Gets or sets a value indicating whether [personal record].
+            </summary>
+            <value>
+              <c>true</c> if [personal record]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Metadata.ManualActivity">
+            <summary>
+            Gets or sets a value indicating whether [manual activity].
+            </summary>
+            <value>
+              <c>true</c> if [manual activity]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.Sensor">
+            <summary>
+            Sensor
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Sensor.Sku">
+            <summary>
+            Gets or sets the sku.
+            </summary>
+            <value>
+            The sku.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Sensor.SourceType">
+            <summary>
+            Gets or sets the type of the source.
+            </summary>
+            <value>
+            The type of the source.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Sensor.SoftwareVersion">
+            <summary>
+            Gets or sets the software version.
+            </summary>
+            <value>
+            The software version.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Sensor.LocalDeviceType">
+            <summary>
+            Gets or sets the type of the local device.
+            </summary>
+            <value>
+            The type of the local device.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.Summary">
+            <summary>
+            Summary
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.StartTimeLocal">
+            <summary>
+            Gets or sets the start time local.
+            </summary>
+            <value>
+            The start time local.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.StartTimeGmt">
+            <summary>
+            Gets or sets the start time GMT.
+            </summary>
+            <value>
+            The start time GMT.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.StartLatitude">
+            <summary>
+            Gets or sets the start latitude.
+            </summary>
+            <value>
+            The start latitude.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.StartLongitude">
+            <summary>
+            Gets or sets the start longitude.
+            </summary>
+            <value>
+            The start longitude.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.Distance">
+            <summary>
+            Gets or sets the distance.
+            </summary>
+            <value>
+            The distance.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.Duration">
+            <summary>
+            Gets or sets the duration.
+            </summary>
+            <value>
+            The duration.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.MovingDuration">
+            <summary>
+            Gets or sets the duration of the moving.
+            </summary>
+            <value>
+            The duration of the moving.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.ElapsedDuration">
+            <summary>
+            Gets or sets the duration of the elapsed.
+            </summary>
+            <value>
+            The duration of the elapsed.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.ElevationGain">
+            <summary>
+            Gets or sets the elevation gain.
+            </summary>
+            <value>
+            The elevation gain.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.ElevationLoss">
+            <summary>
+            Gets or sets the elevation loss.
+            </summary>
+            <value>
+            The elevation loss.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.MaxElevation">
+            <summary>
+            Gets or sets the maximum elevation.
+            </summary>
+            <value>
+            The maximum elevation.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.MinElevation">
+            <summary>
+            Gets or sets the minimum elevation.
+            </summary>
+            <value>
+            The minimum elevation.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.AverageSpeed">
+            <summary>
+            Gets or sets the average speed.
+            </summary>
+            <value>
+            The average speed.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.AverageMovingSpeed">
+            <summary>
+            Gets or sets the average moving speed.
+            </summary>
+            <value>
+            The average moving speed.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.MaxSpeed">
+            <summary>
+            Gets or sets the maximum speed.
+            </summary>
+            <value>
+            The maximum speed.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.Calories">
+            <summary>
+            Gets or sets the calories.
+            </summary>
+            <value>
+            The calories.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.AverageHr">
+            <summary>
+            Gets or sets the average hr.
+            </summary>
+            <value>
+            The average hr.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.MaxHr">
+            <summary>
+            Gets or sets the maximum hr.
+            </summary>
+            <value>
+            The maximum hr.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.AverageRunCadence">
+            <summary>
+            Gets or sets the average run cadence.
+            </summary>
+            <value>
+            The average run cadence.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.MaxRunCadence">
+            <summary>
+            Gets or sets the maximum run cadence.
+            </summary>
+            <value>
+            The maximum run cadence.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.AverageTemperature">
+            <summary>
+            Gets or sets the average temperature.
+            </summary>
+            <value>
+            The average temperature.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.MaxTemperature">
+            <summary>
+            Gets or sets the maximum temperature.
+            </summary>
+            <value>
+            The maximum temperature.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.MinTemperature">
+            <summary>
+            Gets or sets the minimum temperature.
+            </summary>
+            <value>
+            The minimum temperature.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.StrideLength">
+            <summary>
+            Gets or sets the length of the stride.
+            </summary>
+            <value>
+            The length of the stride.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.TrainingEffect">
+            <summary>
+            Gets or sets the training effect.
+            </summary>
+            <value>
+            The training effect.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.AnaerobicTrainingEffect">
+            <summary>
+            Gets or sets the anaerobic training effect.
+            </summary>
+            <value>
+            The anaerobic training effect.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.AerobicTrainingEffectMessage">
+            <summary>
+            Gets or sets the aerobic training effect message.
+            </summary>
+            <value>
+            The aerobic training effect message.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.AnaerobicTrainingEffectMessage">
+            <summary>
+            Gets or sets the anaerobic training effect message.
+            </summary>
+            <value>
+            The anaerobic training effect message.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.EndLatitude">
+            <summary>
+            Gets or sets the end latitude.
+            </summary>
+            <value>
+            The end latitude.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.EndLongitude">
+            <summary>
+            Gets or sets the end longitude.
+            </summary>
+            <value>
+            The end longitude.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.IsDecoDive">
+            <summary>
+            Gets or sets a value indicating whether this instance is deco dive.
+            </summary>
+            <value>
+              <c>true</c> if this instance is deco dive; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.AvgVerticalSpeed">
+            <summary>
+            Gets or sets the average vertical speed.
+            </summary>
+            <value>
+            The average vertical speed.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Summary.MaxVerticalSpeed">
+            <summary>
+            Gets or sets the maximum vertical speed.
+            </summary>
+            <value>
+            The maximum vertical speed.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.TimeZoneUnit">
+            <summary>
+            Time zone
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.TimeZoneUnit.UnitId">
+            <summary>
+            Gets or sets the unit identifier.
+            </summary>
+            <value>
+            The unit identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.TimeZoneUnit.UnitKey">
+            <summary>
+            Gets or sets the unit key.
+            </summary>
+            <value>
+            The unit key.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.TimeZoneUnit.Factor">
+            <summary>
+            Gets or sets the factor.
+            </summary>
+            <value>
+            The factor.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.TimeZoneUnit.TimeZone">
+            <summary>
+            Gets or sets the time zone.
+            </summary>
+            <value>
+            The time zone.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Dto.UserInfo">
+            <summary>
+            User info
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.Id">
+            <summary>
+            Gets or sets the identifier.
+            </summary>
+            <value>
+            The identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ProfileId">
+            <summary>
+            Gets or sets the profile identifier.
+            </summary>
+            <value>
+            The profile identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.GarminGuid">
+            <summary>
+            Gets or sets the garmin unique identifier.
+            </summary>
+            <value>
+            The garmin unique identifier.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.DisplayName">
+            <summary>
+            Gets or sets the display name.
+            </summary>
+            <value>
+            The display name.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.FullName">
+            <summary>
+            Gets or sets the full name.
+            </summary>
+            <value>
+            The full name.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.UserName">
+            <summary>
+            Gets or sets the name of the user.
+            </summary>
+            <value>
+            The name of the user.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ProfileImageUrlLarge">
+            <summary>
+            Gets or sets the profile image URL large.
+            </summary>
+            <value>
+            The profile image URL large.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ProfileImageUrlMedium">
+            <summary>
+            Gets or sets the profile image URL medium.
+            </summary>
+            <value>
+            The profile image URL medium.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ProfileImageUrlSmall">
+            <summary>
+            Gets or sets the profile image URL small.
+            </summary>
+            <value>
+            The profile image URL small.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.Location">
+            <summary>
+            Gets or sets the location.
+            </summary>
+            <value>
+            The location.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.FacebookUrl">
+            <summary>
+            Gets or sets the facebook URL.
+            </summary>
+            <value>
+            The facebook URL.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.TwitterUrl">
+            <summary>
+            Gets or sets the twitter URL.
+            </summary>
+            <value>
+            The twitter URL.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.PersonalWebsite">
+            <summary>
+            Gets or sets the personal website.
+            </summary>
+            <value>
+            The personal website.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.Motivation">
+            <summary>
+            Gets or sets the motivation.
+            </summary>
+            <value>
+            The motivation.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.Bio">
+            <summary>
+            Gets or sets the bio.
+            </summary>
+            <value>
+            The bio.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.PrimaryActivity">
+            <summary>
+            Gets or sets the primary activity.
+            </summary>
+            <value>
+            The primary activity.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.FavoriteActivityTypes">
+            <summary>
+            Gets or sets the favorite activity types.
+            </summary>
+            <value>
+            The favorite activity types.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.RunningTrainingSpeed">
+            <summary>
+            Gets or sets the running training speed.
+            </summary>
+            <value>
+            The running training speed.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.CyclingTrainingSpeed">
+            <summary>
+            Gets or sets the cycling training speed.
+            </summary>
+            <value>
+            The cycling training speed.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.FavoriteCyclingActivityTypes">
+            <summary>
+            Gets or sets the favorite cycling activity types.
+            </summary>
+            <value>
+            The favorite cycling activity types.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.CyclingClassification">
+            <summary>
+            Gets or sets the cycling classification.
+            </summary>
+            <value>
+            The cycling classification.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.CyclingMaxAvgPower">
+            <summary>
+            Gets or sets the cycling maximum average power.
+            </summary>
+            <value>
+            The cycling maximum average power.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.SwimmingTrainingSpeed">
+            <summary>
+            Gets or sets the swimming training speed.
+            </summary>
+            <value>
+            The swimming training speed.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ProfileVisibility">
+            <summary>
+            Gets or sets the profile visibility.
+            </summary>
+            <value>
+            The profile visibility.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ActivityStartVisibility">
+            <summary>
+            Gets or sets the activity start visibility.
+            </summary>
+            <value>
+            The activity start visibility.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ActivityMapVisibility">
+            <summary>
+            Gets or sets the activity map visibility.
+            </summary>
+            <value>
+            The activity map visibility.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.CourseVisibility">
+            <summary>
+            Gets or sets the course visibility.
+            </summary>
+            <value>
+            The course visibility.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ActivityHeartRateVisibility">
+            <summary>
+            Gets or sets the activity heart rate visibility.
+            </summary>
+            <value>
+            The activity heart rate visibility.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ActivityPowerVisibility">
+            <summary>
+            Gets or sets the activity power visibility.
+            </summary>
+            <value>
+            The activity power visibility.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.BadgeVisibility">
+            <summary>
+            Gets or sets the badge visibility.
+            </summary>
+            <value>
+            The badge visibility.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowAge">
+            <summary>
+            Gets or sets a value indicating whether [show age].
+            </summary>
+            <value>
+              <c>true</c> if [show age]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowWeight">
+            <summary>
+            Gets or sets a value indicating whether [show weight].
+            </summary>
+            <value>
+              <c>true</c> if [show weight]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowHeight">
+            <summary>
+            Gets or sets a value indicating whether [show height].
+            </summary>
+            <value>
+              <c>true</c> if [show height]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowWeightClass">
+            <summary>
+            Gets or sets a value indicating whether [show weight class].
+            </summary>
+            <value>
+              <c>true</c> if [show weight class]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowAgeRange">
+            <summary>
+            Gets or sets a value indicating whether [show age range].
+            </summary>
+            <value>
+              <c>true</c> if [show age range]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowGender">
+            <summary>
+            Gets or sets a value indicating whether [show gender].
+            </summary>
+            <value>
+              <c>true</c> if [show gender]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowActivityClass">
+            <summary>
+            Gets or sets a value indicating whether [show activity class].
+            </summary>
+            <value>
+              <c>true</c> if [show activity class]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowVo2Max">
+            <summary>
+            Gets or sets a value indicating whether [show vo2 maximum].
+            </summary>
+            <value>
+              <c>true</c> if [show vo2 maximum]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowPersonalRecords">
+            <summary>
+            Gets or sets a value indicating whether [show personal records].
+            </summary>
+            <value>
+              <c>true</c> if [show personal records]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowLast12Months">
+            <summary>
+            Gets or sets a value indicating whether [show last12 months].
+            </summary>
+            <value>
+              <c>true</c> if [show last12 months]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowLifetimeTotals">
+            <summary>
+            Gets or sets a value indicating whether [show lifetime totals].
+            </summary>
+            <value>
+              <c>true</c> if [show lifetime totals]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowUpcomingEvents">
+            <summary>
+            Gets or sets a value indicating whether [show upcoming events].
+            </summary>
+            <value>
+              <c>true</c> if [show upcoming events]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowRecentFavorites">
+            <summary>
+            Gets or sets a value indicating whether [show recent favorites].
+            </summary>
+            <value>
+              <c>true</c> if [show recent favorites]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowRecentDevice">
+            <summary>
+            Gets or sets a value indicating whether [show recent device].
+            </summary>
+            <value>
+              <c>true</c> if [show recent device]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowRecentGear">
+            <summary>
+            Gets or sets a value indicating whether [show recent gear].
+            </summary>
+            <value>
+              <c>true</c> if [show recent gear]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.ShowBadges">
+            <summary>
+            Gets or sets a value indicating whether [show badges].
+            </summary>
+            <value>
+              <c>true</c> if [show badges]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.OtherActivity">
+            <summary>
+            Gets or sets the other activity.
+            </summary>
+            <value>
+            The other activity.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.OtherPrimaryActivity">
+            <summary>
+            Gets or sets the other primary activity.
+            </summary>
+            <value>
+            The other primary activity.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.OtherMotivation">
+            <summary>
+            Gets or sets the other motivation.
+            </summary>
+            <value>
+            The other motivation.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.UserRoles">
+            <summary>
+            Gets or sets the user roles.
+            </summary>
+            <value>
+            The user roles.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.NameApproved">
+            <summary>
+            Gets or sets a value indicating whether [name approved].
+            </summary>
+            <value>
+              <c>true</c> if [name approved]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.UserProfileFullName">
+            <summary>
+            Gets or sets the full name of the user profile.
+            </summary>
+            <value>
+            The full name of the user profile.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.MakeGolfScorecardsPrivate">
+            <summary>
+            Gets or sets a value indicating whether [make golf scorecards private].
+            </summary>
+            <value>
+              <c>true</c> if [make golf scorecards private]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.AllowGolfLiveScoring">
+            <summary>
+            Gets or sets a value indicating whether [allow golf live scoring].
+            </summary>
+            <value>
+              <c>true</c> if [allow golf live scoring]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.AllowGolfScoringByConnections">
+            <summary>
+            Gets or sets a value indicating whether [allow golf scoring by connections].
+            </summary>
+            <value>
+              <c>true</c> if [allow golf scoring by connections]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.UserLevel">
+            <summary>
+            Gets or sets the user level.
+            </summary>
+            <value>
+            The user level.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.UserPoint">
+            <summary>
+            Gets or sets the user point.
+            </summary>
+            <value>
+            The user point.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.LevelUpdateDate">
+            <summary>
+            Gets or sets the level update date.
+            </summary>
+            <value>
+            The level update date.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.LevelIsViewed">
+            <summary>
+            Gets or sets a value indicating whether [level is viewed].
+            </summary>
+            <value>
+              <c>true</c> if [level is viewed]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.LevelPointThreshold">
+            <summary>
+            Gets or sets the level point threshold.
+            </summary>
+            <value>
+            The level point threshold.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.Dto.UserInfo.UserPro">
+            <summary>
+            Gets or sets a value indicating whether [user pro].
+            </summary>
+            <value>
+              <c>true</c> if [user pro]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Enum.ActivityFileTypeEnum">
+            <summary>
+            Garmin Connect export format enum
+            </summary>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Enum.ActivityTypeEnum">
+            <summary>
+            Garmin Connect export format enum
+            </summary>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Enum.EventTypeEnum">
+            <summary>
+            Garmin Connect export format enum
+            </summary>
+        </member>
+        <member name="T:GarminConnectClient.Lib.IConfiguration">
+            <summary>
+            Configuration interface
+            </summary>
+        </member>
+        <member name="P:GarminConnectClient.Lib.IConfiguration.Username">
+            <summary>
+            Gets the username.
+            </summary>
+            <value>
+            The username.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.IConfiguration.Password">
+            <summary>
+            Gets the password.
+            </summary>
+            <value>
+            The password.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.IConfiguration.BackupDir">
+            <summary>
+            Gets the backup dir.
+            </summary>
+            <value>
+            The backup dir.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.IConfiguration.StorageConnectionString">
+            <summary>
+            Gets the storage connection string.
+            </summary>
+            <value>
+            The storage connection string.
+            </value>
+        </member>
+        <member name="P:GarminConnectClient.Lib.IConfiguration.ContainerName">
+            <summary>
+            Gets the name of the container.
+            </summary>
+            <value>
+            The name of the container.
+            </value>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Services.Client">
+            <inheritdoc />
+            <summary>
+            Client implementation.
+            Inspired by https://github.com/La0/garmin-uploader
+            </summary>
+            <seealso cref="T:GarminConnectClient.Lib.Services.IClient" />
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.Client.configuration">
+            <summary>
+            The configuration
+            </summary>
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.Client.logger">
+            <summary>
+            The logger
+            </summary>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.#ctor(GarminConnectClient.Lib.IConfiguration,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Services.Client" /> class.
+            </summary>
+            <param name="configuration">The configuration.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.Authenticate">
+            <inheritdoc />
+            <summary>
+            Authenticates this instance.
+            </summary>
+            <returns>
+            Tuple of Cookies and HTTP handler
+            </returns>
+            <exception cref="T:System.Exception">
+            SSO hostname is missing
+            or
+            Could not match service ticket.
+            </exception>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.ValidateCookiePresence(System.Net.CookieContainer,System.String)">
+            <summary>
+            Validates the cookie presence.
+            </summary>
+            <param name="container">The container.</param>
+            <param name="cookieName">Name of the cookie.</param>
+            <exception cref="T:System.Exception">Missing cookie {cookieName}</exception>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.DownloadActivityFile(System.Int64,GarminConnectClient.Lib.Enum.ActivityFileTypeEnum)">
+            <inheritdoc />
+            <summary>
+            Downloads the activity file.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="fileFormat">The file format.</param>
+            <returns>
+            Stream
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.UploadActivity(System.String,GarminConnectClient.Lib.Dto.FileFormat)">
+            <inheritdoc />
+            <summary>
+            Uploads the activity.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="fileFormat">The file format.</param>
+            <returns>
+            Tuple of result and activity id
+            </returns>
+            <exception cref="T:System.Exception">
+            Failed to upload {fileName}
+            or
+            or
+            Unknown error: {response.ToString()}
+            </exception>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.SetActivityName(System.Int64,System.String)">
+            <inheritdoc />
+            <summary>
+            Sets the name of the activity.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="activityName">Name of the activity.</param>
+            <returns>
+            The task
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.LoadActivityTypes">
+            <inheritdoc />
+            <summary>
+            Loads the activity types.
+            </summary>
+            <returns>
+            List of activities
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.LoadEventTypes">
+            <summary>
+            Loads the event types.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.SetActivityType(System.Int64,GarminConnectClient.Lib.Dto.ActivityType)">
+            <inheritdoc />
+            <summary>
+            Sets the type of the activity.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="activityType">Type of the activity.</param>
+            <returns>
+            The task
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.SetEventType(System.Int64,GarminConnectClient.Lib.Dto.ActivityType)">
+            <summary>
+            Sets the type of the event.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="eventType">Type of the event.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.SetActivityDescription(System.Int64,System.String)">
+            <inheritdoc />
+            <summary>
+            Sets the activity description.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="description">The description.</param>
+            <returns>
+            The task
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.LoadActivity(System.Int64)">
+            <inheritdoc />
+            <summary>
+            Loads the activity.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <returns>
+            Activity
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.GetUnixTimestamp(System.DateTime)">
+            <summary>
+            Gets the unix timestamp.
+            </summary>
+            <param name="date">The date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.CreateActivitiesUrl(System.Int32,System.Int32,System.DateTime)">
+            <summary>
+            Creates the activities URL.
+            </summary>
+            <param name="limit">The limit.</param>
+            <param name="start">The start.</param>
+            <param name="date">The date.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.LoadActivities(System.Int32,System.Int32,System.DateTime)">
+            <inheritdoc />
+            <summary>
+            Loads the activities.
+            </summary>
+            <param name="limit">The limit.</param>
+            <param name="start">The start.</param>
+            <param name="from">From.</param>
+            <returns>
+            List of activities
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.ExecuteUrlGetRequest``1(System.String,System.String)">
+            <summary>
+            Executes the URL get request.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="url">The URL.</param>
+            <param name="errorMessage">The error message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:GarminConnectClient.Lib.Services.Client" /> class.
+            </summary>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Services.CloudStorage">
+            <inheritdoc />
+            <summary>
+            Azure Cloud Storage
+            </summary>
+            <seealso cref="T:GarminConnectClient.Lib.Services.IStorage" />
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.CloudStorage.blobClient">
+            <summary>
+            The Blob client
+            </summary>
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.CloudStorage.mainContainerName">
+            <summary>
+            The main container name
+            </summary>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.CloudStorage.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Services.CloudStorage" /> class.
+            </summary>
+            <param name="storageConnectionString">The storage connection string.</param>
+            <param name="mainContainerName">Name of the main container.</param>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.CloudStorage.CreateDirectory(System.String)">
+            <inheritdoc />
+            <summary>
+            Creates the directory.
+            </summary>
+            <param name="directoryName">Name of the directory.</param>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.CloudStorage.FileExists(System.String)">
+            <inheritdoc />
+            <summary>
+            Files the exists.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <returns>
+            Task with operation result
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.CloudStorage.LoadData(System.String)">
+            <inheritdoc />
+            <summary>
+            Loads the data.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <returns>
+            Data string
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.CloudStorage.StoreData(System.String,System.IO.Stream)">
+            <inheritdoc />
+            <summary>
+            Stores the data.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="data">The data.</param>
+            <returns>
+            Task result
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.CloudStorage.StoreData(System.String,System.String)">
+            <inheritdoc />
+            <summary>
+            Stores the data.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="data">The data.</param>
+            <returns>
+            Task result
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.CloudStorage.StoreData(System.String,System.Byte[])">
+            <inheritdoc />
+            <summary>
+            Stores the data.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="data">The data.</param>
+            <returns>
+            Task result
+            </returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.CloudStorage.GetBlobOfContainer(System.String,System.String)">
+            <summary>
+            Gets the Blob of container.
+            </summary>
+            <param name="containerName">Name of the container.</param>
+            <param name="blobName">Name of the BLOB.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.CloudStorage.GetContainer(System.String)">
+            <summary>
+            Gets the container.
+            </summary>
+            <param name="containerName">Name of the container.</param>
+            <returns></returns>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Services.Downloader">
+            <inheritdoc />
+            <summary>
+            Garmin Connect downloader
+            </summary>
+            <seealso cref="T:GarminConnectClient.Lib.Services.IDownloader" />
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.Downloader.ActivityDataFile">
+            <summary>
+            The activity data file
+            </summary>
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.Downloader.GpsDataFile">
+            <summary>
+            The activity data file
+            </summary>
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.Downloader.configuration">
+            <summary>
+            The configuration
+            </summary>
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.Downloader.logger">
+            <summary>
+            The logger
+            </summary>
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.Downloader.client">
+            <summary>
+            The client
+            </summary>
+        </member>
+        <member name="F:GarminConnectClient.Lib.Services.Downloader.storage">
+            <summary>
+            The storage
+            </summary>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Downloader.#ctor(GarminConnectClient.Lib.IConfiguration,GarminConnectClient.Lib.Services.IClient,GarminConnectClient.Lib.Services.IStorage,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Services.Downloader" /> class.
+            </summary>
+            <param name="configuration">The configuration.</param>
+            <param name="client">The client.</param>
+            <param name="storage">The storage.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Downloader.DownloadLastUserActivities">
+            <inheritdoc />
+            <summary>
+            Downloads the last user activities.
+            </summary>
+            <returns>List of activities</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Downloader.GetAndStoreGpsData(System.Int64,GarminConnectClient.Lib.Enum.ActivityFileTypeEnum,System.String)">
+            <inheritdoc />
+            <summary>
+            Gets the and store GPS data.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="fileFormat">File format.</param>
+            <param name="fileName">Name of the file.</param>
+            <returns>Task result</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Downloader.CreateFileName(System.String,System.String)">
+            <summary>
+            Creates the name of the file.
+            </summary>
+            <param name="rootDir">The root dir.</param>
+            <param name="fileName">Name of the file.</param>
+            <returns>File name</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Downloader.CreateGpsFileMapName(GarminConnectClient.Lib.Enum.ActivityFileTypeEnum)">
+            <inheritdoc />
+            <summary>
+            Creates the name of the GPS file map.
+            </summary>
+            <param name="exportFormat">The export format.</param>
+            <returns>GPS file name</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Downloader.DownloadActivity(GarminConnectClient.Lib.Dto.Activity,System.Boolean)">
+            <inheritdoc />
+            <summary>
+            Downloads the activity.
+            </summary>
+            <param name="activity">Activity.</param>
+            <param name="checkFileExistence">Should be file existence checked.</param>
+            <returns>Move instance</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Downloader.DownloadActivity(System.Int64)">
+            <inheritdoc />
+            <summary>
+            Downloads the activity.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <returns>
+            Activity instance
+            </returns>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Services.IClient">
+            <summary>
+            IClient
+            Inspired by https://github.com/La0/garmin-uploader
+            </summary>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IClient.Authenticate">
+            <summary>
+            Authenticates this instance.
+            </summary>
+            <returns>Tuple of Cookies and HTTP handler</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IClient.DownloadActivityFile(System.Int64,GarminConnectClient.Lib.Enum.ActivityFileTypeEnum)">
+            <summary>
+            Downloads the activity file.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="fileFormat">The file format.</param>
+            <returns>Stream</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IClient.LoadActivities(System.Int32,System.Int32,System.DateTime)">
+            <summary>
+            Loads the activities.
+            </summary>
+            <param name="limit">The limit.</param>
+            <param name="start">The start.</param>
+            <param name="from">From.</param>
+            <returns>List of activities</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IClient.LoadActivity(System.Int64)">
+            <summary>
+            Loads the activity.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <returns>Activity</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IClient.LoadActivityTypes">
+            <summary>
+            Loads the activity types.
+            </summary>
+            <returns>List of activities</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IClient.SetActivityDescription(System.Int64,System.String)">
+            <summary>
+            Sets the activity description.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="description">The description.</param>
+            <returns>The task</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IClient.SetActivityName(System.Int64,System.String)">
+            <summary>
+            Sets the name of the activity.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="activityName">Name of the activity.</param>
+            <returns>The task</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IClient.SetActivityType(System.Int64,GarminConnectClient.Lib.Dto.ActivityType)">
+            <summary>
+            Sets the type of the activity.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="activityType">Type of the activity.</param>
+            <returns>The task</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IClient.UploadActivity(System.String,GarminConnectClient.Lib.Dto.FileFormat)">
+            <summary>
+            Uploads the activity.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="fileFormat">The file format.</param>
+            <returns>Tuple of result and activity id</returns>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Services.IDownloader">
+            <summary>
+            Data downloader.
+            </summary>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IDownloader.DownloadLastUserActivities">
+            <summary>
+            Downloads the last user activities.
+            </summary>
+            <returns>List of activities</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IDownloader.GetAndStoreGpsData(System.Int64,GarminConnectClient.Lib.Enum.ActivityFileTypeEnum,System.String)">
+            <summary>
+            Gets the and store GPS data.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <param name="exportFormat">The export format.</param>
+            <param name="fileName">Name of the file.</param>
+            <returns>Task result</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IDownloader.DownloadActivity(GarminConnectClient.Lib.Dto.Activity,System.Boolean)">
+            <summary>
+            Downloads the activity.
+            </summary>
+            <param name="activity">The activity instance.</param>
+            <param name="checkFileExistence">Should check activity directory existence.</param>
+            <returns>Activity instance</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IDownloader.DownloadActivity(System.Int64)">
+            <summary>
+            Downloads the activity.
+            </summary>
+            <param name="activityId">The activity identifier.</param>
+            <returns>Activity instance</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IDownloader.CreateGpsFileMapName(GarminConnectClient.Lib.Enum.ActivityFileTypeEnum)">
+            <summary>
+            Creates the name of the GPS file map.
+            </summary>
+            <param name="exportFormat">The export format.</param>
+            <returns>GPS file name</returns>
+        </member>
+        <member name="T:GarminConnectClient.Lib.Services.IStorage">
+            <summary>
+            IStorage interface
+            </summary>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IStorage.LoadData(System.String)">
+            <summary>
+            Loads the data.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <returns>Data string</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IStorage.StoreData(System.String,System.IO.Stream)">
+            <summary>
+            Stores the data.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="data">The data.</param>
+            <returns>Task result</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IStorage.StoreData(System.String,System.String)">
+            <summary>
+            Stores the data.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="data">The data.</param>
+            <returns>Task result</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IStorage.StoreData(System.String,System.Byte[])">
+            <summary>
+            Stores the data.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="data">The data.</param>
+            <returns>Task result</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IStorage.FileExists(System.String)">
+            <summary>
+            Files the exists.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <returns>Task with operation result</returns>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.IStorage.CreateDirectory(System.String)">
+            <summary>
+            Creates the directory.
+            </summary>
+            <param name="directoryName">Name of the directory.</param>
+        </member>
+    </members>
+</doc>
