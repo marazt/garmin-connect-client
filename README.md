@@ -1,3 +1,5 @@
+<img src="logo-128.png" align="left" style="width:128px; margin-right: 20px;" />
+
 # Garmin Connect Client
 
 GarminConnectClient is a library for communication with **GarminConnect**. It allows to list, download and upload Garmin activities. 
