@@ -7,12 +7,17 @@ It is inspired by https://github.com/La0/garmin-uploader.
  
 ## Version
 
+- **Version 1.1.0** - 2019-05-21
+
+  - Fix of the workflow. A csrf token must be parsed and added to the login step.
+
 - **Version 1.0.1** - 2018-11-29
+  - Initial version. 
 
 ### Getting Started/Installing
 
 ```ps
-PM> Install-Package GarminConnectClientNet -Version 1.0.1
+PM> Install-Package GarminConnectClientNet -Version 1.1.0
 ```
 
 ## Project Description
