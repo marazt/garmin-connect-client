@@ -13,7 +13,7 @@
         </member>
         <member name="M:GarminConnectClient.Lib.Configuration.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)">
             <summary>
-            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Configuration" /> class.
+            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Configuration"/> class.
             </summary>
             <param name="root">The root.</param>
         </member>
@@ -616,7 +616,7 @@
         </member>
         <member name="P:GarminConnectClient.Lib.Dto.Metadata.Gcj02">
             <summary>
-            Gets or sets a value indicating whether this <see cref="T:GarminConnectClient.Lib.Dto.Metadata" /> is GCJ02.
+            Gets or sets a value indicating whether this <see cref="T:GarminConnectClient.Lib.Dto.Metadata"/> is GCJ02.
             </summary>
             <value>
               <c>true</c> if GCJ02; otherwise, <c>false</c>.
@@ -632,7 +632,7 @@
         </member>
         <member name="P:GarminConnectClient.Lib.Dto.Metadata.Favorite">
             <summary>
-            Gets or sets a value indicating whether this <see cref="T:GarminConnectClient.Lib.Dto.Metadata" /> is favorite.
+            Gets or sets a value indicating whether this <see cref="T:GarminConnectClient.Lib.Dto.Metadata"/> is favorite.
             </summary>
             <value>
               <c>true</c> if favorite; otherwise, <c>false</c>.
@@ -1578,7 +1578,7 @@
         </member>
         <member name="M:GarminConnectClient.Lib.Services.Client.#ctor(GarminConnectClient.Lib.IConfiguration,Microsoft.Extensions.Logging.ILogger)">
             <summary>
-            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Services.Client" /> class.
+            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Services.Client"/> class.
             </summary>
             <param name="configuration">The configuration.</param>
             <param name="logger">The logger.</param>
@@ -1596,6 +1596,17 @@
             or
             Could not match service ticket.
             </exception>
+        </member>
+        <member name="M:GarminConnectClient.Lib.Services.Client.GetValueByPattern(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Gets the value by pattern.
+            </summary>
+            <param name="data">The data.</param>
+            <param name="pattern">The pattern.</param>
+            <param name="expectedCountOfGroups">The expected count of groups.</param>
+            <param name="groupPosition">The group position.</param>
+            <returns>Value of particular match group.</returns>
+            <exception cref="T:System.Exception">Could not match expected pattern {pattern}</exception>
         </member>
         <member name="M:GarminConnectClient.Lib.Services.Client.ValidateCookiePresence(System.Net.CookieContainer,System.String)">
             <summary>
@@ -1760,7 +1771,7 @@
         </member>
         <member name="M:GarminConnectClient.Lib.Services.CloudStorage.#ctor(System.String,System.String)">
             <summary>
-            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Services.CloudStorage" /> class.
+            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Services.CloudStorage"/> class.
             </summary>
             <param name="storageConnectionString">The storage connection string.</param>
             <param name="mainContainerName">Name of the main container.</param>
@@ -1879,7 +1890,7 @@
         </member>
         <member name="M:GarminConnectClient.Lib.Services.Downloader.#ctor(GarminConnectClient.Lib.IConfiguration,GarminConnectClient.Lib.Services.IClient,GarminConnectClient.Lib.Services.IStorage,Microsoft.Extensions.Logging.ILogger)">
             <summary>
-            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Services.Downloader" /> class.
+            Initializes a new instance of the <see cref="T:GarminConnectClient.Lib.Services.Downloader"/> class.
             </summary>
             <param name="configuration">The configuration.</param>
             <param name="client">The client.</param>

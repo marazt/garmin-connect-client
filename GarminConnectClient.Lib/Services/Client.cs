@@ -31,6 +31,7 @@ namespace GarminConnectClient.Lib.Services
         private const string UrlProfile = "https://connect.garmin.com/modern/proxy/userprofile-service/socialProfile/";
         private const string UrlHostSso = "sso.garmin.com";
         private const string UrlHostConnect = "connect.garmin.com";
+        private const string UrlSsoSignIn = "https://sso.garmin.com/sso/signin";
         private const string UrlUpload = "https://connect.garmin.com/modern/proxy/upload-service/upload";
         private const string UrlActivityBase = "https://connect.garmin.com/modern/proxy/activity-service/activity";
 
@@ -135,13 +136,13 @@ namespace GarminConnectClient.Lib.Services
             this.httpClient = new HttpClient(clientHandler);
 
             this.httpClient.DefaultRequestHeaders.Add("User-Agent",
-                "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/50.0");
+                "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0");
             var data = await this.httpClient.GetStringAsync(UrlHostName);
 
             var ssoHostname = JObject.Parse(data)["host"] == null
-                ? throw new Exception("SSO hostname is missing") 
+                ? throw new Exception("SSO hostname is missing")
                 : JObject.Parse(data)["host"].ToString();
-            
+
             QueryParams["webhost"] = ssoHostname;
             var queryParams = string.Join("&", QueryParams.Select(e => $"{e.Key}={WebUtility.UrlEncode(e.Value)}"));
 
@@ -149,14 +150,19 @@ namespace GarminConnectClient.Lib.Services
             var res = await this.httpClient.GetAsync(url);
             ValidateResponseMessage(res, "No login form.");
 
+            data = await res.Content.ReadAsStringAsync();
+            var csrfToken = GetValueByPattern(data, @"input type=\""hidden\"" name=\""_csrf\"" value=\""(\w+)\"" \/>", 2, 1);
+
             this.httpClient.DefaultRequestHeaders.Add("Host", UrlHostSso);
+            this.httpClient.DefaultRequestHeaders.Add("Referer", UrlSsoSignIn);
             url = $"{UrlLogin}?{queryParams}";
 
             var formContent = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("embed", "false"),
                 new KeyValuePair<string, string>("username", this.configuration.Username),
-                new KeyValuePair<string, string>("password", this.configuration.Password)
+                new KeyValuePair<string, string>("password", this.configuration.Password),
+                new KeyValuePair<string, string>("_csrf", csrfToken)
             });
 
             res = await this.httpClient.PostAsync(url, formContent);
@@ -164,15 +170,7 @@ namespace GarminConnectClient.Lib.Services
             ValidateResponseMessage(res, $"Bad response {res.StatusCode}, expected {HttpStatusCode.OK}");
             ValidateCookiePresence(cookieContainer, "GARMIN-SSO-GUID");
 
-            const string pattern = @"var response_url(\s+)= (\""|\').*?ticket=([\w\-]+)(\""|\')";
-            var regex = new Regex(pattern);
-            var match = regex.Match(data);
-            if (!match.Success || match.Groups.Count != 5)
-            {
-                throw new Exception("Could not match service ticket.");
-            }
-
-            var ticket = match.Groups[3].Value;
+            var ticket = GetValueByPattern(data, @"var response_url(\s+)= (\""|\').*?ticket=([\w\-]+)(\""|\')", 5, 3);
 
             // Second auth step
             // Needs a service ticket from previous response
@@ -191,6 +189,26 @@ namespace GarminConnectClient.Lib.Services
             ValidateResponseMessage(res, "Login check failed.");
 
             return (cookieContainer, clientHandler);
+        }
+
+        /// <summary>
+        /// Gets the value by pattern.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="pattern">The pattern.</param>
+        /// <param name="expectedCountOfGroups">The expected count of groups.</param>
+        /// <param name="groupPosition">The group position.</param>
+        /// <returns>Value of particular match group.</returns>
+        /// <exception cref="Exception">Could not match expected pattern {pattern}</exception>
+        private static string GetValueByPattern(string data, string pattern, int expectedCountOfGroups, int groupPosition)
+        {
+            var regex = new Regex(pattern);
+            var match = regex.Match(data);
+            if (!match.Success || match.Groups.Count != expectedCountOfGroups)
+            {
+                throw new Exception($"Could not match expected pattern {pattern}.");
+            }
+            return match.Groups[groupPosition].Value;
         }
 
         /// <summary>
@@ -228,8 +246,8 @@ namespace GarminConnectClient.Lib.Services
         /// </returns>
         public async Task<Stream> DownloadActivityFile(long activityId, ActivityFileTypeEnum fileFormat)
         {
-            var url = fileFormat == DefaultFile 
-                ? string.Format(UrlActivityDownloadDefaultFile, activityId) 
+            var url = fileFormat == DefaultFile
+                ? string.Format(UrlActivityDownloadDefaultFile, activityId)
                 : string.Format(UrlActivityDownloadFile, fileFormat.ToString().ToLower(), activityId);
 
             Stream streamCopy = new MemoryStream();
