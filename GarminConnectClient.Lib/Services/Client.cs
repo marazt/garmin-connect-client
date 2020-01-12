@@ -25,13 +25,20 @@ namespace GarminConnectClient.Lib.Services
     /// <seealso cref="T:GarminConnectClient.Lib.Services.IClient" />
     public class Client : IClient
     {
-        private const string UrlHostName = "https://connect.garmin.com/modern/auth/hostname";
-        private const string UrlLogin = "https://sso.garmin.com/sso/login";
-        private const string UrlPostLogin = "https://connect.garmin.com/modern/";
-        private const string UrlProfile = "https://connect.garmin.com/modern/proxy/userprofile-service/socialProfile/";
-        private const string UrlHostSso = "sso.garmin.com";
-        private const string UrlHostConnect = "connect.garmin.com";
-        private const string UrlSsoSignIn = "https://sso.garmin.com/sso/signin";
+        private const string LOCALE = "en_US";
+        private const string USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0";
+        private const string CONNECT_DNS = "connect.garmin.com";
+        private const string CONNECT_URL = "https://" + CONNECT_DNS;
+        private const string CONNECT_URL_MODERN = CONNECT_URL + "/modern/";
+        private const string CONNECT_URL_SIGNIN = CONNECT_URL + "/signin/";
+        private const string SSO_DNS = "sso.garmin.com";
+        private const string SSO_URL = "https://" + SSO_DNS;
+        private const string SSO_URL_SSO = SSO_URL + "/sso";
+        private const string SSO_URL_SSO_SIGNIN = SSO_URL_SSO + "/signin";
+        private const string CONNECT_URL_PROFILE = CONNECT_URL_MODERN + "proxy/userprofile-service/socialProfile/";
+        private const string CONNECT_MODERN_HOSTNAME = "https://connect.garmin.com/modern/auth/hostname";
+        private const string CSS_URL = CONNECT_URL + "/gauth-custom-v1.2-min.css";
+        private const string PRIVACY_STATEMENT_URL = "https://www.garmin.com/en-US/privacy/connect/";
         private const string UrlUpload = "https://connect.garmin.com/modern/proxy/upload-service/upload";
         private const string UrlActivityBase = "https://connect.garmin.com/modern/proxy/activity-service/activity";
 
@@ -64,28 +71,37 @@ namespace GarminConnectClient.Lib.Services
             {"connectLegalTerms", "true"},
             {"consumeServiceTicket", "false"},
             {"createAccountShown", "true"},
-            {"cssUrl", "https://static.garmincdn.com/com.garmin.connect/ui/css/gauth-custom-v1.2-min.css"},
+            {"cssUrl", CSS_URL},
             {"displayNameShown", "false"},
             {"embedWidget", "false"},
             // ReSharper disable once StringLiteralTypo
-            {"gauthHost", "https://sso.garmin.com/sso"},
-            {"generateExtraServiceTicket", "false"},
+            {"gauthHost", SSO_URL_SSO},
+            {"generateExtraServiceTicket", "true"},
+            {"generateTwoExtraServiceTickets", "false"},
+            {"generateNoServiceTicket", "false"},
             {"globalOptInChecked", "false"},
-            {"globalOptInShown", "false"},
+            {"globalOptInShown", "true"},
             // ReSharper disable once StringLiteralTypo
             {"id", "gauth-widget"},
             {"initialFocus", "true"},
-            {"locale", "en"},
+            {"locale", LOCALE},
+            {"locationPromptShon", "true"},
             {"mobile", "false"},
             {"openCreateAccount", "false"},
-            {"privacyStatementUrl", "//connect.garmin.com/en-US/privacy/"},
-            {"redirectAfterAccountCreationUrl", "https://connect.garmin.com/modern/"},
-            {"redirectAfterAccountLoginUrl", "https://connect.garmin.com/modern/"},
+            {"privacyStatementUrl", PRIVACY_STATEMENT_URL},
+            {"redirectAfterAccountCreationUrl", CONNECT_URL_MODERN},
+            {"redirectAfterAccountLoginUrl", CONNECT_URL_MODERN},
             {"rememberMeChecked", "false"},
             {"rememberMeShown", "true"},
-            {"service", "https://connect.garmin.com/modern/"},
-            {"source", "https://connect.garmin.com/en-US/signin"},
-            {"usernameShown", "false"}
+            {"service", CONNECT_URL_MODERN},
+            {"showTermsOfUse", "false"},
+            {"showPrivacyPolicy", "false"},
+            {"showConnectLegalAge", "false"},
+            {"showPassword", "true"},
+            {"source", CONNECT_URL_SIGNIN},
+            // {"usernameShown", "false"},
+            {"useCustomHeader", "false"},
+            {"webhost", CONNECT_URL_MODERN}
         };
 
         /// <summary>
@@ -135,27 +151,31 @@ namespace GarminConnectClient.Lib.Services
 
             this.httpClient = new HttpClient(clientHandler);
 
-            this.httpClient.DefaultRequestHeaders.Add("User-Agent",
-                "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0");
-            var data = await this.httpClient.GetStringAsync(UrlHostName);
+            this.httpClient.DefaultRequestHeaders.Add("user-agent", USER_AGENT);
+            var data = await this.httpClient.GetStringAsync(CONNECT_MODERN_HOSTNAME);
 
             var ssoHostname = JObject.Parse(data)["host"] == null
                 ? throw new Exception("SSO hostname is missing")
                 : JObject.Parse(data)["host"].ToString();
 
-            QueryParams["webhost"] = ssoHostname;
             var queryParams = string.Join("&", QueryParams.Select(e => $"{e.Key}={WebUtility.UrlEncode(e.Value)}"));
 
-            var url = $"{UrlLogin}?{queryParams}";
+            var url = $"{SSO_URL_SSO_SIGNIN}?{queryParams}";
             var res = await this.httpClient.GetAsync(url);
             ValidateResponseMessage(res, "No login form.");
 
             data = await res.Content.ReadAsStringAsync();
-            var csrfToken = GetValueByPattern(data, @"input type=\""hidden\"" name=\""_csrf\"" value=\""(\w+)\"" \/>", 2, 1);
+            var csrfToken = "";
+            try {
+                GetValueByPattern(data, @"input type=\""hidden\"" name=\""_csrf\"" value=\""(\w+)\"" \/>", 2, 1);
+            } catch (Exception e) {
+                this.logger.LogError("Exception finding token by pattern: ", e);
+                this.logger.LogError($"data:\n{data}");
+                throw e;
+            }
 
-            this.httpClient.DefaultRequestHeaders.Add("Host", UrlHostSso);
-            this.httpClient.DefaultRequestHeaders.Add("Referer", UrlSsoSignIn);
-            url = $"{UrlLogin}?{queryParams}";
+            this.httpClient.DefaultRequestHeaders.Add("origin", SSO_URL);
+            this.httpClient.DefaultRequestHeaders.Add("referer", url);
 
             var formContent = new FormUrlEncodedContent(new[]
             {
@@ -174,18 +194,17 @@ namespace GarminConnectClient.Lib.Services
 
             // Second auth step
             // Needs a service ticket from previous response
-            this.httpClient.DefaultRequestHeaders.Remove("Host");
-            this.httpClient.DefaultRequestHeaders.Add("Host", UrlHostConnect);
-            url = $"{UrlPostLogin}?ticket={WebUtility.UrlEncode(ticket)}";
+            this.httpClient.DefaultRequestHeaders.Remove("origin");
+            url = $"{CONNECT_URL_MODERN}?ticket={WebUtility.UrlEncode(ticket)}";
             res = await this.httpClient.GetAsync(url);
 
-            ValidateResponseMessage(res, "Second auth step failed.");
+            ValidateModernTicketUrlResponseMessage(res, $"Second auth step failed to produce success or expected 302: {res.StatusCode}.");
 
             // Check session cookie
             ValidateCookiePresence(cookieContainer, "SESSIONID");
 
             // Check login
-            res = await this.httpClient.GetAsync(UrlProfile);
+            res = await this.httpClient.GetAsync(CONNECT_URL_PROFILE);
             ValidateResponseMessage(res, "Login check failed.");
 
             return (cookieContainer, clientHandler);
@@ -219,7 +238,7 @@ namespace GarminConnectClient.Lib.Services
         /// <exception cref="Exception">Missing cookie {cookieName}</exception>
         private static void ValidateCookiePresence(CookieContainer container, string cookieName)
         {
-            var cookies = container.GetCookies(new Uri(UrlPostLogin)).Cast<Cookie>().ToList();
+            var cookies = container.GetCookies(new Uri(CONNECT_URL_MODERN)).Cast<Cookie>().ToList();
             if (!cookies.Any(e => string.Equals(cookieName, e.Name, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new Exception($"Missing cookie {cookieName}");
@@ -232,6 +251,12 @@ namespace GarminConnectClient.Lib.Services
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new Exception(errorMessage);
+            }
+        }
+
+        private void ValidateModernTicketUrlResponseMessage(HttpResponseMessage responseMessage, string error) {
+            if (!responseMessage.IsSuccessStatusCode && !responseMessage.StatusCode.Equals(HttpStatusCode.MovedPermanently)) {
+                throw new Exception(error);
             }
         }
 
@@ -491,12 +516,12 @@ namespace GarminConnectClient.Lib.Services
         /// <returns>
         /// Activity
         /// </returns>
-        public async Task<Activity> LoadActivity(long activityId)
+        public async Task<SingleActivity> LoadActivity(long activityId)
         {
             var url = $"{UrlActivityBase}/{activityId}";
             this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
-            return await this.ExecuteUrlGetRequest<Activity>(url, "Error while getting activity");
+            return await this.ExecuteUrlGetRequest<SingleActivity>(url, "Error while getting activity");
         }
 
         /// <summary>

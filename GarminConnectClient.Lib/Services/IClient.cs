@@ -43,7 +43,7 @@ namespace GarminConnectClient.Lib.Services
         /// </summary>
         /// <param name="activityId">The activity identifier.</param>
         /// <returns>Activity</returns>
-        Task<Activity> LoadActivity(long activityId);
+        Task<SingleActivity> LoadActivity(long activityId);
 
         /// <summary>
         /// Loads the activity types.
