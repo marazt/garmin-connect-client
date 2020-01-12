@@ -5,7 +5,7 @@ namespace GarminConnectClient.Lib.Dto
     /// <summary>
     /// Activity
     /// </summary>
-    public class BaseActivity
+    public class Activity
     {
         /// <summary>
         /// Gets or sets the activity identifier.
@@ -51,6 +51,28 @@ namespace GarminConnectClient.Lib.Dto
         /// </value>
         [JsonProperty("isMultiSportParent")]
         public bool IsMultiSportParent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the activity.
+        /// </summary>
+        /// <value>
+        /// The type of the activity.
+        /// </value>
+        [JsonProperty("activityTypeDTO")]
+        public ActivityType ActivityType { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the type of the activity.
+        /// Overloaded JsonProperty for the same property - "activityTypeDTO".
+        /// </summary>
+        /// <value>
+        /// The type of the activity.
+        /// </value>
+        [JsonProperty("activityType")]
+#pragma warning disable IDE0051 // Remove unused private members
+        private ActivityType ActivityTypeInternal { set { this.ActivityType = value; } }
+#pragma warning restore IDE0051 // Remove unused private members
 
         /// <summary>
         /// Gets or sets the type of the event.
@@ -105,29 +127,5 @@ namespace GarminConnectClient.Lib.Dto
         /// </value>
         [JsonProperty("locationName")]
         public string LocationName { get; set; }
-    }
-
-    public class Activity : BaseActivity
-    {
-        /// <summary>
-        /// Gets or sets the type of the activity.
-        /// </summary>
-        /// <value>
-        /// The type of the activity.
-        /// </value>
-        [JsonProperty("activityType")]
-        public ActivityType ActivityType { get; set; }
-    }
-
-    public class SingleActivity : BaseActivity
-    {
-        /// <summary>
-        /// Gets or sets the type of the activity.
-        /// </summary>
-        /// <value>
-        /// The type of the activity.
-        /// </value>
-        [JsonProperty("activityTypeDTO")]
-        public ActivityType ActivityType { get; set; }
     }
 }

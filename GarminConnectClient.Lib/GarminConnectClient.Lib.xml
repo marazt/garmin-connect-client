@@ -136,6 +136,15 @@
             The type of the activity.
             </value>
         </member>
+        <member name="P:GarminConnectClient.Lib.Dto.Activity.ActivityTypeInternal">
+            <summary>
+            Gets or sets the type of the activity.
+            Overloaded JsonProperty for the same property - "activityTypeDTO".
+            </summary>
+            <value>
+            The type of the activity.
+            </value>
+        </member>
         <member name="P:GarminConnectClient.Lib.Dto.Activity.EventType">
             <summary>
             Gets or sets the type of the event.

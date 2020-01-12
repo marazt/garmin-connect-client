@@ -39,8 +39,8 @@ namespace GarminConnectClient.Lib.Services
         private const string CONNECT_MODERN_HOSTNAME = "https://connect.garmin.com/modern/auth/hostname";
         private const string CSS_URL = CONNECT_URL + "/gauth-custom-v1.2-min.css";
         private const string PRIVACY_STATEMENT_URL = "https://www.garmin.com/en-US/privacy/connect/";
-        private const string UrlUpload = "https://connect.garmin.com/modern/proxy/upload-service/upload";
-        private const string UrlActivityBase = "https://connect.garmin.com/modern/proxy/activity-service/activity";
+        private const string URL_UPLOAD = CONNECT_URL + "/modern/proxy/upload-service/upload";
+        private const string URL_ACTIVITY_BASE = CONNECT_URL + "/modern/proxy/activity-service/activity";
 
         private const string UrlActivityTypes =
             "https://connect.garmin.com/modern/proxy/activity-service/activity/activityTypes";
@@ -166,9 +166,12 @@ namespace GarminConnectClient.Lib.Services
 
             data = await res.Content.ReadAsStringAsync();
             var csrfToken = "";
-            try {
+            try
+            {
                 GetValueByPattern(data, @"input type=\""hidden\"" name=\""_csrf\"" value=\""(\w+)\"" \/>", 2, 1);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 this.logger.LogError("Exception finding token by pattern: ", e);
                 this.logger.LogError($"data:\n{data}");
                 throw e;
@@ -254,8 +257,10 @@ namespace GarminConnectClient.Lib.Services
             }
         }
 
-        private void ValidateModernTicketUrlResponseMessage(HttpResponseMessage responseMessage, string error) {
-            if (!responseMessage.IsSuccessStatusCode && !responseMessage.StatusCode.Equals(HttpStatusCode.MovedPermanently)) {
+        private void ValidateModernTicketUrlResponseMessage(HttpResponseMessage responseMessage, string error)
+        {
+            if (!responseMessage.IsSuccessStatusCode && !responseMessage.StatusCode.Equals(HttpStatusCode.MovedPermanently))
+            {
                 throw new Exception(error);
             }
         }
@@ -301,7 +306,7 @@ namespace GarminConnectClient.Lib.Services
         public async Task<(bool Success, long ActivityId)> UploadActivity(string fileName, FileFormat fileFormat)
         {
             var extension = fileFormat.FormatKey;
-            var url = $"{UrlUpload}/.{extension}";
+            var url = $"{URL_UPLOAD}/.{extension}";
             this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
             var form = new MultipartFormDataContent(
@@ -372,7 +377,7 @@ namespace GarminConnectClient.Lib.Services
         /// </returns>
         public async Task SetActivityName(long activityId, string activityName)
         {
-            var url = $"{UrlActivityBase}/{activityId}";
+            var url = $"{URL_ACTIVITY_BASE}/{activityId}";
             this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
             this.httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
 
@@ -426,7 +431,7 @@ namespace GarminConnectClient.Lib.Services
         /// </returns>
         public async Task SetActivityType(long activityId, ActivityType activityType)
         {
-            var url = $"{UrlActivityBase}/{activityId}";
+            var url = $"{URL_ACTIVITY_BASE}/{activityId}";
             this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
             this.httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
@@ -455,7 +460,7 @@ namespace GarminConnectClient.Lib.Services
         /// <returns></returns>
         public async Task SetEventType(long activityId, ActivityType eventType)
         {
-            var url = $"{UrlActivityBase}/{activityId}";
+            var url = $"{URL_ACTIVITY_BASE}/{activityId}";
             this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
             this.httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
@@ -487,7 +492,7 @@ namespace GarminConnectClient.Lib.Services
         /// </returns>
         public async Task SetActivityDescription(long activityId, string description)
         {
-            var url = $"{UrlActivityBase}/{activityId}";
+            var url = $"{URL_ACTIVITY_BASE}/{activityId}";
             this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
             this.httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
@@ -516,12 +521,12 @@ namespace GarminConnectClient.Lib.Services
         /// <returns>
         /// Activity
         /// </returns>
-        public async Task<SingleActivity> LoadActivity(long activityId)
+        public async Task<Activity> LoadActivity(long activityId)
         {
-            var url = $"{UrlActivityBase}/{activityId}";
+            var url = $"{URL_ACTIVITY_BASE}/{activityId}";
             this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
-            return await this.ExecuteUrlGetRequest<SingleActivity>(url, "Error while getting activity");
+            return await this.ExecuteUrlGetRequest<Activity>(url, "Error while getting activity");
         }
 
         /// <summary>

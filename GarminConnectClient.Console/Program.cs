@@ -23,9 +23,12 @@ namespace GarminConnectClient.Console
     {
         private const int Timeout = 20000;
 
+
         // ReSharper disable once ArrangeTypeMemberModifiers
         // ReSharper disable once UnusedParameter.Local
+#pragma warning disable IDE0060 // Remove unused parameter
         private static void Main(string[] args)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             var storedFiles = new Dictionary<string, string>();
             using (var stream = new FileStream(@"C:\Users\maraz\Desktop\moves\log.txt", FileMode.OpenOrCreate))
@@ -83,8 +86,8 @@ namespace GarminConnectClient.Console
                     }
 
                     System.Console.WriteLine($"Uploading Garmin Connect move {activityData.MoveId}");
-                    var result = client.UploadActivity(gpxFile, new FileFormat { FormatKey = "gpx" }).Result;
-                    if (!result.Success)
+                    var (Success, ActivityId) = client.UploadActivity(gpxFile, new FileFormat { FormatKey = "gpx" }).Result;
+                    if (!Success)
                     {
                         System.Console.WriteLine($"Error while uploading uploading Garmin Connect move {activityData.MoveId}.");
                         throw new Exception("Error while uploading uploading Garmin Connect move {activityData.MoveId}.");
@@ -94,23 +97,23 @@ namespace GarminConnectClient.Console
                 ? activityData.Notes.Split('.').FirstOrDefault() ?? activityData.MoveId.ToString()
                 : activityData.MoveId.ToString();
 
-                    System.Console.WriteLine($"Setting name of Garmin Connect move {activityData.MoveId} (Garmin activity {result.ActivityId}) to '{name}'.");
-                    client.SetActivityName(result.ActivityId, name).Wait();
+                    System.Console.WriteLine($"Setting name of Garmin Connect move {activityData.MoveId} (Garmin activity {ActivityId}) to '{name}'.");
+                    client.SetActivityName(ActivityId, name).Wait();
 
                     Task.Delay(Timeout).Wait();
 
                     var description = CreateDescription(activityData);
 
-                    System.Console.WriteLine($"Setting description of Garmin Connect move {activityData.MoveId} (Garmin activity {result.ActivityId}) to '{description}'.");
-                    client.SetActivityDescription(result.ActivityId, description).Wait();
+                    System.Console.WriteLine($"Setting description of Garmin Connect move {activityData.MoveId} (Garmin activity {ActivityId}) to '{description}'.");
+                    client.SetActivityDescription(ActivityId, description).Wait();
 
                     Task.Delay(Timeout).Wait();
 
                     var activityType = activityTypes.FirstOrDefault(e => string.Equals(e.TypeKey, ResolveActivityType(activityData.ActivityID).TypeKey, StringComparison.InvariantCultureIgnoreCase));
                     if (activityType != null)
                     {
-                        System.Console.WriteLine($"Setting activity type of Garmin Connect move {activityData.MoveId} (Garmin activity {result.ActivityId}) to '{activityType.TypeKey}'.");
-                        client.SetActivityType(result.ActivityId, activityType).Wait();
+                        System.Console.WriteLine($"Setting activity type of Garmin Connect move {activityData.MoveId} (Garmin activity {ActivityId}) to '{activityType.TypeKey}'.");
+                        client.SetActivityType(ActivityId, activityType).Wait();
                         Task.Delay(Timeout).Wait();
                     }
 
@@ -120,13 +123,13 @@ namespace GarminConnectClient.Console
 
                     if (eventType != null)
                     {
-                        System.Console.WriteLine($"Setting event type of Garmin Connect move {activityData.MoveId} (Garmin activity {result.ActivityId}) to '{eventType.TypeKey}'.");
-                        client.SetEventType(result.ActivityId, eventType).Wait();
+                        System.Console.WriteLine($"Setting event type of Garmin Connect move {activityData.MoveId} (Garmin activity {ActivityId}) to '{eventType.TypeKey}'.");
+                        client.SetEventType(ActivityId, eventType).Wait();
                         Task.Delay(Timeout).Wait();
                     }
 
-                    storedFiles.Add(activityData.MoveId.ToString(), result.ActivityId.ToString());
-                    UpdateLogFile(activityData.MoveId, result.ActivityId);
+                    storedFiles.Add(activityData.MoveId.ToString(), ActivityId.ToString());
+                    UpdateLogFile(activityData.MoveId, ActivityId);
 
                     System.Console.WriteLine("-------------------------------------------------------------------------------");
                 }
