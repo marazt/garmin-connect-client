@@ -3,6 +3,16 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Version>1.2.0</Version>
+    <Authors>Marazt</Authors>
+    <Company>Marazt</Company>
+    <Description>A test and usage example project.</Description>
+    <Copyright>© 2020 Marek Polak</Copyright>
+    <PackageProjectUrl>https://github.com/marazt/garmin-connect-client</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/marazt/garmin-connect-client</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>garmin garminconnect backup activity</PackageTags>
+    <PackageReleaseNotes>Fix of the new GarminConnect login workflow.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

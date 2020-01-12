@@ -3,10 +3,14 @@
 # Garmin Connect Client
 
 GarminConnectClient is a library for communication with **GarminConnect**. It allows to list, download and upload Garmin activities. 
-It is inspired by https://github.com/La0/garmin-uploader.
- 
+It is inspired by [https://github.com/La0/garmin-uploader](https://github.com/La0/garmin-uploader).
+
 ## Version
 
+- **Version 1.2.0** - 2020-01-12
+
+  - Fix of the GarminConnect login workflow. Thanks [@GroveJay](https://github.com/GroveJay).
+ 
 - **Version 1.1.0** - 2019-05-21
 
   - Fix of the workflow. A csrf token must be parsed and added to the login step.

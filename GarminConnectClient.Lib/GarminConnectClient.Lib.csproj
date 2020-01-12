@@ -1,20 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>GarminConnectClient is a library for communication with GarminConnect. It allows to list, download and upload Garmin activities. It is inspired by https://github.com/La0/garmin-uploader.</Description>
-    <Copyright>© 2018 Marek Polak</Copyright>
+    <Copyright>© 2020 Marek Polak</Copyright>
     <PackageLicenseUrl>https://github.com/marazt/garmin-connect-client/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/marazt/garmin-connect-client</PackageProjectUrl>
     <RepositoryUrl>https://github.com/marazt/garmin-connect-client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>garmin garminconnect backup activity</PackageTags>
-    <PackageReleaseNotes>Initial version.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix of the new GarminConnect login workflow.</PackageReleaseNotes>
     <PackageId>GarminConnectClientNet</PackageId>
     <Authors>Marazt</Authors>
     <Company>Marazt</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
