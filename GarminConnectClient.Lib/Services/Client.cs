@@ -1,4 +1,4 @@
-using GarminConnectClient.Lib.Dto;
+﻿using GarminConnectClient.Lib.Dto;
 using GarminConnectClient.Lib.Enum;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -29,7 +29,7 @@ namespace GarminConnectClient.Lib.Services
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0";
         private const string CONNECT_DNS = "connect.garmin.com";
         private const string CONNECT_URL = "https://" + CONNECT_DNS;
-        private const string CONNECT_URL_MODERN = CONNECT_URL + "/modern/";
+        private const string CONNECT_URL_MODERN = CONNECT_URL + "/";
         private const string CONNECT_URL_SIGNIN = CONNECT_URL + "/signin/";
         private const string SSO_DNS = "sso.garmin.com";
         private const string SSO_URL = "https://" + SSO_DNS;
@@ -39,23 +39,23 @@ namespace GarminConnectClient.Lib.Services
         private const string CONNECT_MODERN_HOSTNAME = "https://connect.garmin.com/modern/auth/hostname";
         private const string CSS_URL = CONNECT_URL + "/gauth-custom-v1.2-min.css";
         private const string PRIVACY_STATEMENT_URL = "https://www.garmin.com/en-US/privacy/connect/";
-        private const string URL_UPLOAD = CONNECT_URL + "/modern/proxy/upload-service/upload";
+        private const string URL_UPLOAD = CONNECT_URL + "/proxy/upload-service/upload";
         private const string URL_ACTIVITY_BASE = CONNECT_URL + "/modern/proxy/activity-service/activity";
 
         private const string UrlActivityTypes =
-            "https://connect.garmin.com/modern/proxy/activity-service/activity/activityTypes";
+            "https://connect.garmin.com/proxy/activity-service/activity/activityTypes";
 
         private const string UrlEventTypes =
-            "https://connect.garmin.com/modern/proxy/activity-service/activity/eventTypes";
+            "https://connect.garmin.com/proxy/activity-service/activity/eventTypes";
 
         private const string UrlActivitiesBase =
-            "https://connect.garmin.com/modern/proxy/activitylist-service/activities/search/activities";
+            "https://connect.garmin.com/proxy/activitylist-service/activities/search/activities";
 
         private const string UrlActivityDownloadFile =
-            " https://connect.garmin.com/modern/proxy/download-service/export/{0}/activity/{1}";
+            "https://connect.garmin.com/modern/proxy/download-service/export/{0}/activity/{1}";
 
         private const string UrlActivityDownloadDefaultFile =
-            " https://connect.garmin.com/modern/proxy/download-service/files/activity/{0}";
+            "https://connect.garmin.com/modern/proxy/download-service/files/activity/{0}";
 
         private const ActivityFileTypeEnum DefaultFile = ActivityFileTypeEnum.Fit;
 
@@ -174,7 +174,7 @@ namespace GarminConnectClient.Lib.Services
             {
                 this.logger.LogError("Exception finding token by pattern: ", e);
                 this.logger.LogError($"data:\n{data}");
-                throw e;
+                throw;
             }
 
             this.httpClient.DefaultRequestHeaders.Add("origin", SSO_URL);
@@ -259,7 +259,7 @@ namespace GarminConnectClient.Lib.Services
 
         private void ValidateModernTicketUrlResponseMessage(HttpResponseMessage responseMessage, string error)
         {
-            if (!responseMessage.IsSuccessStatusCode && !responseMessage.StatusCode.Equals(HttpStatusCode.MovedPermanently))
+            if (!responseMessage.IsSuccessStatusCode && !responseMessage.StatusCode.Equals(HttpStatusCode.OK))
             {
                 throw new Exception(error);
             }
