@@ -1,4 +1,4 @@
-﻿using GarminConnectClient.Lib.Dto;
+using GarminConnectClient.Lib.Dto;
 using GarminConnectClient.Lib.Enum;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -343,7 +343,8 @@ namespace GarminConnectClient.Lib.Services
                         var successes = response["successes"];
                         if (successes.HasValues)
                         {
-                            return (true, long.Parse(successes[0]["internalId"].ToString()));
+                            long.TryParse(successes[0]["internalId"].ToString(), out long internalId);
+                            return (true, internalId);
                         }
 
                         var failures = response["failures"];
@@ -357,7 +358,8 @@ namespace GarminConnectClient.Lib.Services
                         if (code == (int)HttpStatusCode.Accepted)
                         {
                             // Activity already exists
-                            return (false, long.Parse(messages[0]["internalId"].ToString()));
+                            long.TryParse(successes[0]["internalId"].ToString(), out long internalId);
+                            return (false, internalId);
                         }
 
                         throw new Exception(messages.ToString());
