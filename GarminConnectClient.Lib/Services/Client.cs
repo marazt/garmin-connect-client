@@ -1,9 +1,4 @@
-using GarminConnectClient.Lib.Dto;
-using GarminConnectClient.Lib.Enum;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -14,6 +9,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using GarminConnectClient.Lib.Dto;
+using GarminConnectClient.Lib.Enum;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace GarminConnectClient.Lib.Services
 {
@@ -59,13 +59,22 @@ namespace GarminConnectClient.Lib.Services
 
         private const ActivityFileTypeEnum DefaultFile = ActivityFileTypeEnum.Fit;
 
-        private static CookieContainer cookieContainer;
-        private static HttpClientHandler clientHandler;
-        private HttpClient httpClient;
+        private static readonly CookieContainer _cookieContainer = new();
+        private static readonly HttpClientHandler _clientHandler = new()
+        {
+            AllowAutoRedirect = true,
+            UseCookies = true,
+            CookieContainer = _cookieContainer
+        };
+        private static HttpClient httpClient = new(_clientHandler)
+        {
+            DefaultRequestVersion = HttpVersion.Version20,
+            DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher
+        };
 
-        private static readonly Tuple<string, string> BaseHeader = new Tuple<string, string>("NK", "NT");
+        private static readonly Tuple<string, string> BaseHeader = new("NK", "NT");
 
-        private static readonly Dictionary<string, string> QueryParams = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> QueryParams = new()
         {
             {"clientId", "GarminConnect"},
             {"connectLegalTerms", "true"},
@@ -99,7 +108,6 @@ namespace GarminConnectClient.Lib.Services
             {"showConnectLegalAge", "false"},
             {"showPassword", "true"},
             {"source", CONNECT_URL_SIGNIN},
-            // {"usernameShown", "false"},
             {"useCustomHeader", "false"},
             {"webhost", CONNECT_URL_MODERN}
         };
@@ -107,13 +115,13 @@ namespace GarminConnectClient.Lib.Services
         /// <summary>
         /// The configuration
         /// </summary>
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration _configuration;
 
         /// <summary>
         /// The logger
         /// </summary>
         // ReSharper disable once NotAccessedField.Local
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
@@ -122,8 +130,8 @@ namespace GarminConnectClient.Lib.Services
         /// <param name="logger">The logger.</param>
         public Client(IConfiguration configuration, ILogger logger)
         {
-            this.configuration = configuration;
-            this.logger = logger;
+            _configuration = configuration;
+            _logger = logger;
         }
 
         /// <inheritdoc />
@@ -140,24 +148,8 @@ namespace GarminConnectClient.Lib.Services
         /// </exception>
         public async Task<(CookieContainer, HttpClientHandler)> Authenticate()
         {
-            cookieContainer = new CookieContainer();
-            clientHandler =
-                new HttpClientHandler
-                {
-                    AllowAutoRedirect = true,
-                    UseCookies = true,
-                    CookieContainer = cookieContainer
-                };
-
-            this.httpClient = new HttpClient(clientHandler)
-            {
-
-                DefaultRequestVersion = HttpVersion.Version20,
-                DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher
-            };
-
-            this.httpClient.DefaultRequestHeaders.Add("user-agent", USER_AGENT);
-            var data = await this.httpClient.GetStringAsync(CONNECT_MODERN_HOSTNAME);
+            httpClient.DefaultRequestHeaders.Add("user-agent", USER_AGENT);
+            var data = await httpClient.GetStringAsync(CONNECT_MODERN_HOSTNAME);
 
             var ssoHostname = JObject.Parse(data)["host"] == null
                 ? throw new Exception("SSO hostname is missing")
@@ -166,7 +158,7 @@ namespace GarminConnectClient.Lib.Services
             var queryParams = string.Join("&", QueryParams.Select(e => $"{e.Key}={WebUtility.UrlEncode(e.Value)}"));
 
             var url = $"{SSO_URL_SSO_SIGNIN}?{queryParams}";
-            var res = await this.httpClient.GetAsync(url);
+            var res = await httpClient.GetAsync(url);
             ValidateResponseMessage(res, "No login form.");
 
             data = await res.Content.ReadAsStringAsync();
@@ -177,45 +169,46 @@ namespace GarminConnectClient.Lib.Services
             }
             catch (Exception e)
             {
-                this.logger.LogError("Exception finding token by pattern: ", e);
-                this.logger.LogError($"data:\n{data}");
+                _logger.LogError("Exception finding token by pattern: ", e);
+                _logger.LogError("data:\n", data);
                 throw;
             }
 
-            this.httpClient.DefaultRequestHeaders.Add("origin", SSO_URL);
-            this.httpClient.DefaultRequestHeaders.Add("referer", url);
+            httpClient.DefaultRequestHeaders.Add("origin", SSO_URL);
+            httpClient.DefaultRequestHeaders.Add("referer", url);
+            httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
             var formContent = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("embed", "false"),
-                new KeyValuePair<string, string>("username", this.configuration.Username),
-                new KeyValuePair<string, string>("password", this.configuration.Password),
+                new KeyValuePair<string, string>("username", _configuration.Username),
+                new KeyValuePair<string, string>("password", _configuration.Password),
                 new KeyValuePair<string, string>("_csrf", csrfToken)
             });
 
-            res = await this.httpClient.PostAsync(url, formContent);
+            res = await httpClient.PostAsync(url, formContent);
             data = await res.Content.ReadAsStringAsync();
             ValidateResponseMessage(res, $"Bad response {res.StatusCode}, expected {HttpStatusCode.OK}");
-            ValidateCookiePresence(cookieContainer, "GARMIN-SSO-GUID");
+            ValidateCookiePresence(_cookieContainer, "GARMIN-SSO-GUID");
 
             var ticket = GetValueByPattern(data, @"var response_url(\s+)= (\""|\').*?ticket=([\w\-]+)(\""|\')", 5, 3);
 
             // Second auth step
             // Needs a service ticket from previous response
-            this.httpClient.DefaultRequestHeaders.Remove("origin");
+            httpClient.DefaultRequestHeaders.Remove("origin");
             url = $"{CONNECT_URL_MODERN}?ticket={WebUtility.UrlEncode(ticket)}";
-            res = await this.httpClient.GetAsync(url);
+            res = await httpClient.GetAsync(url);
 
             ValidateModernTicketUrlResponseMessage(res, $"Second auth step failed to produce success or expected 302: {res.StatusCode}.");
 
             // Check session cookie
-            ValidateCookiePresence(cookieContainer, "SESSIONID");
+            ValidateCookiePresence(_cookieContainer, "SESSIONID");
 
             // Check login
-            res = await this.httpClient.GetAsync(CONNECT_URL_PROFILE);
+            res = await httpClient.GetAsync(CONNECT_URL_PROFILE);
             ValidateResponseMessage(res, "Login check failed.");
 
-            return (cookieContainer, clientHandler);
+            return (_cookieContainer, _clientHandler);
         }
 
         /// <summary>
@@ -262,7 +255,7 @@ namespace GarminConnectClient.Lib.Services
             }
         }
 
-        private void ValidateModernTicketUrlResponseMessage(HttpResponseMessage responseMessage, string error)
+        private static void ValidateModernTicketUrlResponseMessage(HttpResponseMessage responseMessage, string error)
         {
             if (!responseMessage.IsSuccessStatusCode && !responseMessage.StatusCode.Equals(HttpStatusCode.OK))
             {
@@ -286,11 +279,10 @@ namespace GarminConnectClient.Lib.Services
                 : string.Format(UrlActivityDownloadFile, fileFormat.ToString().ToLower(), activityId);
 
             Stream streamCopy = new MemoryStream();
-            using (var res = await this.httpClient.GetAsync(url))
-            {
-                await (await res.Content.ReadAsStreamAsync()).CopyToAsync(streamCopy);
-                return streamCopy;
-            }
+            var res = await httpClient.GetAsync(url);
+
+            await (await res.Content.ReadAsStreamAsync()).CopyToAsync(streamCopy);
+            return streamCopy;
         }
 
         /// <inheritdoc />
@@ -312,65 +304,59 @@ namespace GarminConnectClient.Lib.Services
         {
             var extension = fileFormat.FormatKey;
             var url = $"{URL_UPLOAD}/.{extension}";
-            this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
             var form = new MultipartFormDataContent(
                 $"------WebKitFormBoundary{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}");
 
-            using (var stream = new FileStream(fileName, FileMode.Open))
+            using var stream = new FileStream(fileName, FileMode.Open);
+            using var content = new StreamContent(stream);
+
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
             {
-                using (var content = new StreamContent(stream))
-                {
-                    content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                    {
-                        Name = "file",
-                        FileName = Path.GetFileName(fileName),
-                        Size = stream.Length
-                    };
+                Name = "file",
+                FileName = Path.GetFileName(fileName),
+                Size = stream.Length
+            };
 
-                    form.Headers.Add(BaseHeader.Item1, BaseHeader.Item2);
-                    form.Add(content, "file", Path.GetFileName(fileName));
-                    using (var res = await this.httpClient.PostAsync(url, form))
-                    {
-                        // HTTP Status can either be OK or Conflict
-                        if (!new HashSet<HttpStatusCode>
+            form.Add(content, "file", Path.GetFileName(fileName));
+
+            var res = await httpClient.PostAsync(url, form);
+            // HTTP Status can either be OK or Conflict
+            if (!new HashSet<HttpStatusCode>
                                 {HttpStatusCode.OK, HttpStatusCode.Created, HttpStatusCode.Conflict}
-                            .Contains(res.StatusCode))
-                        {
-                            if (res.StatusCode == HttpStatusCode.PreconditionFailed)
-                            {
-                                throw new Exception($"Failed to upload {fileName}");
-                            }
-                        }
-
-                        var responseData = await res.Content.ReadAsStringAsync();
-                        var response = JObject.Parse(responseData)["detailedImportResult"];
-                        var successes = response["successes"];
-                        if (successes.HasValues)
-                        {
-                            long.TryParse(successes[0]["internalId"].ToString(), out long internalId);
-                            return (true, internalId);
-                        }
-
-                        var failures = response["failures"];
-                        if (!failures.HasValues)
-                        {
-                            throw new Exception($"Unknown error: {response}");
-                        }
-
-                        var messages = failures[0]["messages"];
-                        var code = int.Parse(messages[0]["code"].ToString());
-                        if (code == (int)HttpStatusCode.Accepted)
-                        {
-                            // Activity already exists
-                            long.TryParse(successes[0]["internalId"].ToString(), out long internalId);
-                            return (false, internalId);
-                        }
-
-                        throw new Exception(messages.ToString());
-                    }
+                .Contains(res.StatusCode))
+            {
+                if (res.StatusCode == HttpStatusCode.PreconditionFailed)
+                {
+                    throw new Exception($"Failed to upload {fileName}");
                 }
             }
+
+            var responseData = await res.Content.ReadAsStringAsync();
+            var response = JObject.Parse(responseData)["detailedImportResult"];
+            var successes = response["successes"];
+            if (successes.HasValues)
+            {
+                _ = long.TryParse(successes[0]["internalId"].ToString(), out long internalId);
+                return (true, internalId);
+            }
+
+            var failures = response["failures"];
+            if (!failures.HasValues)
+            {
+                throw new Exception($"Unknown error: {response}");
+            }
+
+            var messages = failures[0]["messages"];
+            var code = int.Parse(messages[0]["code"].ToString());
+            if (code == (int)HttpStatusCode.Accepted)
+            {
+                // Activity already exists
+                _ = long.TryParse(successes[0]["internalId"].ToString(), out long internalId);
+                return (false, internalId);
+            }
+
+            throw new Exception(messages.ToString());
         }
 
         /// <inheritdoc />
@@ -385,8 +371,7 @@ namespace GarminConnectClient.Lib.Services
         public async Task SetActivityName(long activityId, string activityName)
         {
             var url = $"{URL_ACTIVITY_BASE}/{activityId}";
-            this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
-            this.httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
+            httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
 
             var data = new
             {
@@ -394,13 +379,12 @@ namespace GarminConnectClient.Lib.Services
                 activityName
             };
 
-            using (var res = await this.httpClient.PostAsync(url,
-                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json")))
+            var res = await httpClient.PostAsync(url,
+                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json"));
+
+            if (!res.IsSuccessStatusCode)
             {
-                if (!res.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Activity name not set: {await res.Content.ReadAsStringAsync()}");
-                }
+                throw new Exception($"Activity name not set: {await res.Content.ReadAsStringAsync()}");
             }
         }
 
@@ -413,7 +397,7 @@ namespace GarminConnectClient.Lib.Services
         /// </returns>
         public async Task<List<ActivityType>> LoadActivityTypes()
         {
-            return await this.ExecuteUrlGetRequest<List<ActivityType>>(UrlActivityTypes,
+            return await ExecuteUrlGetRequest<List<ActivityType>>(UrlActivityTypes,
                 "Error while getting activity types");
         }
 
@@ -423,7 +407,7 @@ namespace GarminConnectClient.Lib.Services
         /// <returns></returns>
         public async Task<List<ActivityType>> LoadEventTypes()
         {
-            return await this.ExecuteUrlGetRequest<List<ActivityType>>(UrlEventTypes,
+            return await ExecuteUrlGetRequest<List<ActivityType>>(UrlEventTypes,
                 "Error while getting event types");
         }
 
@@ -439,9 +423,8 @@ namespace GarminConnectClient.Lib.Services
         public async Task SetActivityType(long activityId, ActivityType activityType)
         {
             var url = $"{URL_ACTIVITY_BASE}/{activityId}";
-            this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
-            this.httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
+            httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
 
             var data = new
             {
@@ -449,13 +432,12 @@ namespace GarminConnectClient.Lib.Services
                 activityTypeDTO = activityType
             };
 
-            using (var res = await this.httpClient.PostAsync(url,
-                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json")))
+            var res = await httpClient.PostAsync(url,
+                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json"));
+
+            if (!res.IsSuccessStatusCode)
             {
-                if (!res.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Activity type not set: {await res.Content.ReadAsStringAsync()}");
-                }
+                throw new Exception($"Activity type not set: {await res.Content.ReadAsStringAsync()}");
             }
         }
 
@@ -468,9 +450,8 @@ namespace GarminConnectClient.Lib.Services
         public async Task SetEventType(long activityId, ActivityType eventType)
         {
             var url = $"{URL_ACTIVITY_BASE}/{activityId}";
-            this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
-            this.httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
+            httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
 
             var data = new
             {
@@ -478,13 +459,12 @@ namespace GarminConnectClient.Lib.Services
                 eventTypeDTO = eventType
             };
 
-            using (var res = await this.httpClient.PostAsync(url,
-                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json")))
+            var res = await httpClient.PostAsync(url,
+                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json"));
+
+            if (!res.IsSuccessStatusCode)
             {
-                if (!res.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Event type not set: {await res.Content.ReadAsStringAsync()}");
-                }
+                throw new Exception($"Event type not set: {await res.Content.ReadAsStringAsync()}");
             }
         }
 
@@ -500,9 +480,8 @@ namespace GarminConnectClient.Lib.Services
         public async Task SetActivityDescription(long activityId, string description)
         {
             var url = $"{URL_ACTIVITY_BASE}/{activityId}";
-            this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
-            this.httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
+            httpClient.DefaultRequestHeaders.Add("X-HTTP-Method-Override", "PUT");
 
             var data = new
             {
@@ -510,13 +489,12 @@ namespace GarminConnectClient.Lib.Services
                 description
             };
 
-            using (var res = await this.httpClient.PostAsync(url,
-                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json")))
+            var res = await httpClient.PostAsync(url,
+                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json"));
+
+            if (!res.IsSuccessStatusCode)
             {
-                if (!res.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Activity description not set: {await res.Content.ReadAsStringAsync()}");
-                }
+                throw new Exception($"Activity description not set: {await res.Content.ReadAsStringAsync()}");
             }
         }
 
@@ -531,9 +509,8 @@ namespace GarminConnectClient.Lib.Services
         public async Task<Activity> LoadActivity(long activityId)
         {
             var url = $"{URL_ACTIVITY_BASE}/{activityId}";
-            this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
-            return await this.ExecuteUrlGetRequest<Activity>(url, "Error while getting activity");
+            return await ExecuteUrlGetRequest<Activity>(url, "Error while getting activity");
         }
 
         /// <summary>
@@ -571,9 +548,8 @@ namespace GarminConnectClient.Lib.Services
         public async Task<List<Activity>> LoadActivities(int limit, int start, DateTime from)
         {
             var url = CreateActivitiesUrl(limit, start, from);
-            this.httpClient.DefaultRequestHeaders.Add(BaseHeader.Item1, BaseHeader.Item2);
 
-            return await this.ExecuteUrlGetRequest<List<Activity>>(url, "Error while getting activities");
+            return await ExecuteUrlGetRequest<List<Activity>>(url, "Error while getting activities");
         }
 
         private static T DeserializeData<T>(string data) where T : class
@@ -590,7 +566,7 @@ namespace GarminConnectClient.Lib.Services
         /// <returns></returns>
         private async Task<T> ExecuteUrlGetRequest<T>(string url, string errorMessage) where T : class
         {
-            var res = await this.httpClient.GetAsync(url);
+            var res = await httpClient.GetAsync(url);
             var data = await res.Content.ReadAsStringAsync();
             if (!res.IsSuccessStatusCode)
             {
@@ -605,13 +581,13 @@ namespace GarminConnectClient.Lib.Services
         /// </summary>
         ~Client()
         {
-            if (this.httpClient == null)
+            if (httpClient == null)
             {
                 return;
             }
 
-            this.httpClient.Dispose();
-            this.httpClient = null;
+            httpClient.Dispose();
+            httpClient = null;
         }
     }
 }

@@ -1575,12 +1575,12 @@
             </summary>
             <seealso cref="T:GarminConnectClient.Lib.Services.IClient" />
         </member>
-        <member name="F:GarminConnectClient.Lib.Services.Client.configuration">
+        <member name="F:GarminConnectClient.Lib.Services.Client._configuration">
             <summary>
             The configuration
             </summary>
         </member>
-        <member name="F:GarminConnectClient.Lib.Services.Client.logger">
+        <member name="F:GarminConnectClient.Lib.Services.Client._logger">
             <summary>
             The logger
             </summary>
