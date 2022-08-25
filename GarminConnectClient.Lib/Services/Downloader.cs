@@ -1,13 +1,13 @@
-﻿using GarminConnectClient.Lib.Dto;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using GarminConnectClient.Lib.Dto;
 using GarminConnectClient.Lib.Enum;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace GarminConnectClient.Lib.Services
 {
@@ -113,14 +113,14 @@ namespace GarminConnectClient.Lib.Services
         public async Task GetAndStoreGpsData(long activityId, ActivityFileTypeEnum fileFormat,
             string fileName)
         {
-            this.logger.LogInformation($"Downloading of GPS data in {fileFormat.ToString()} format started.");
+            this.logger.LogInformation("Downloading of GPS data in {fileFormat} format started.", fileFormat);
             using (var data = await this.client.DownloadActivityFile(activityId, fileFormat))
             {
                 //data.Position = 0;
                 await this.storage.StoreData(fileName, data);
             }
 
-            this.logger.LogInformation($"Downloading of GPS data in {fileFormat.ToString()} format done.");
+            this.logger.LogInformation("Downloading of GPS data in {fileFormat} format done.", fileFormat);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace GarminConnectClient.Lib.Services
             {
                 if (await this.storage.FileExists(activityDataFile))
                 {
-                    this.logger.LogInformation($"Activity {activity.ActivityId} is already downloaded.");
+                    this.logger.LogInformation("Activity {activity.ActivityId} is already downloaded.", activity.ActivityId);
                     return null;
                 }
             }
@@ -171,14 +171,12 @@ namespace GarminConnectClient.Lib.Services
             this.logger.LogInformation("Saving of activity data done.");
 
             this.logger.LogInformation("Saving of activity media started.");
-            foreach (var image in activity.Metadata.ActivityImages ?? new ActivityImage[0])
+            foreach (var image in activity.Metadata.ActivityImages ?? Array.Empty<ActivityImage>())
             {
-                using (var httpClient = new HttpClient())
-                {
-                    var data = await httpClient.GetByteArrayAsync(image.Url);
-                    var urlParts = image.Url.ToString().Split('/');
-                    await this.storage.StoreData(CreateFileName(mediaDir, urlParts[urlParts.Length - 1]), data);
-                }
+                using var httpClient = new HttpClient();
+                var data = await httpClient.GetByteArrayAsync(image.Url);
+                var urlParts = image.Url.ToString().Split('/');
+                await this.storage.StoreData(CreateFileName(mediaDir, urlParts[^1]), data);
             }
             this.logger.LogInformation("Saving of activity media done.");
 
@@ -193,7 +191,7 @@ namespace GarminConnectClient.Lib.Services
                 await this.GetAndStoreGpsData(activity.ActivityId, exportFormat, CreateFileName(activityDir, this.CreateGpsFileMapName(exportFormat)));
             }
 
-            this.logger.LogInformation($"Downloading of activity {activity.ActivityId} done.");
+            this.logger.LogInformation("Downloading of activity {activity.ActivityId} done.", activity.ActivityId);
             return activity;
         }
 
@@ -207,13 +205,13 @@ namespace GarminConnectClient.Lib.Services
         /// </returns>
         public async Task<Activity> DownloadActivity(long activityId)
         {
-            this.logger.LogInformation($"Downloading of activity {activityId} started.");
+            this.logger.LogInformation("Downloading of activity {activityId} started.", activityId);
             var activityDir = string.IsNullOrWhiteSpace(this.configuration.BackupDir) ? activityId.ToString() : Path.Combine(this.configuration.BackupDir, activityId.ToString());
             var activityDataFile = CreateFileName(activityDir, ActivityDataFile);
 
             if (await this.storage.FileExists(activityDataFile))
             {
-                this.logger.LogInformation($"Activity {activityId} is already downloaded.");
+                this.logger.LogInformation("Activity {activityId} is already downloaded.", activityId);
                 return null;
             }
 
