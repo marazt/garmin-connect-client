@@ -1,4 +1,4 @@
-﻿using GarminConnectClient.Lib.Dto;
+using GarminConnectClient.Lib.Dto;
 using GarminConnectClient.Lib.Enum;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -149,7 +149,12 @@ namespace GarminConnectClient.Lib.Services
                     CookieContainer = cookieContainer
                 };
 
-            this.httpClient = new HttpClient(clientHandler);
+            this.httpClient = new HttpClient(clientHandler)
+            {
+
+                DefaultRequestVersion = HttpVersion.Version20,
+                DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher
+            };
 
             this.httpClient.DefaultRequestHeaders.Add("user-agent", USER_AGENT);
             var data = await this.httpClient.GetStringAsync(CONNECT_MODERN_HOSTNAME);
@@ -168,7 +173,7 @@ namespace GarminConnectClient.Lib.Services
             var csrfToken = "";
             try
             {
-                GetValueByPattern(data, @"input type=\""hidden\"" name=\""_csrf\"" value=\""(\w+)\"" \/>", 2, 1);
+                csrfToken = GetValueByPattern(data, @"input type=\""hidden\"" name=\""_csrf\"" value=\""(\w+)\"" \/>", 2, 1);
             }
             catch (Exception e)
             {
